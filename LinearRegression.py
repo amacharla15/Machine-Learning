@@ -140,3 +140,35 @@ Even if you add IDs 11–20 later, IDs 1 and 4 will remain in their original set
 
 We divide by the maximum possible CRC32 value: for example if hashing give 1= 2212294583, we divide by 2^32 = 4294967296 to get 0.5149.
 """
+
+#StratifiedShuffleSplit vs train_test_split with stratify
+"""
+1. Regular train_test_split
+- Splits the dataset randomly into train and test sets.
+- If the dataset is large and well-distributed, this is usually fine.
+- Problem: For smaller datasets or when certain categories are important, random splitting can change category proportions between train and test sets, causing sampling bias.
+
+2. Stratified sampling
+- Goal: Keep the same proportion of an important category in both train and test sets.
+- This is useful when a specific feature strongly influences the target variable and you want both subsets to represent the overall population fairly.
+
+3. StratifiedShuffleSplit
+- Allows multiple different stratified splits.
+- Preserves the proportion of the chosen category (stratum) in each split.
+- Returns train and test indices; you use these indices to select rows from the dataset.
+- Parameters:
+    * n_splits: Number of different splits to generate.
+    * test_size: Fraction of data to put in the test set.
+    * random_state: Ensures reproducibility of splits.
+- Use case: Cross-validation or repeated experiments with stratification.
+
+4. train_test_split(..., stratify=...)
+- One-time stratified split.
+- Shorter syntax: directly returns the train and test sets without needing to handle indices manually.
+- Parameters:
+    * test_size: Fraction of data to put in the test set.
+    * stratify: The column (Series/array) whose proportion you want to preserve.
+    * random_state: Ensures reproducibility of the split.
+- Use case: Quick, one-time stratified split without multiple repetitions.
+
+"""
