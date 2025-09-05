@@ -6,8 +6,7 @@ y hat - predicted values
 Loss function → “How bad was my prediction for this one example?”
 Cost function → “On average, how bad am I doing across all examples?”
 =====================================================================
-
-Closed form without Gradient Descent:::
+Step 1: Simple Linear Regression - Works only when you have 1 feature (x).
 
 life_satisfaction = θ0 + θ1 × GDP_per_capita
 
@@ -28,4 +27,59 @@ For simple linear regression:
 
 xˉ - mean of x values
 yˉ - mean of y values
+
+It comes from solving the MSE minimization by hand for one variable. Very fast and simple — no matrices needed.
+
+Example: If you have just GDP → Life Satisfaction, use this formula.
+==========================================================================================
+2. The matrix form (Normal Equation) — Multiple Linear Regression
+θ=(XTX)−1XTy
+
+Works for any number of features (1, 2, 10, 100…).
+
+Handles multiple features automatically.
+
+Uses linear algebra instead of separate slope/intercept formulas.
+
+The bias term is handled by adding that first column of 1s in X.
+
+Example:
+
+If you have GDP & Education → Life Satisfaction,
+or more features like healthcare, pollution, crime rate,
+the simple formula won’t work — you need this matrix form.
+
+example: 2. Put our data into a matrix
+
+Let’s take this dataset:
+
+GDP (x₁)	Education (x₂)	Life Satisfaction (y)
+20	7	10
+15	5	8
+25	8	11
+
+We build X:
+
+First column = 1 for bias term (x₀)
+
+Second column = GDP values
+
+Third column = Education values
+
+X = [[1, 20, 7],
+     [1, 15, 5],
+     [1, 25, 8]]
+y = [[10],
+     [8],
+     [11]]
+The formula
+does not give you only θ₀ or only θ₁ — it gives you all the parameters at once.
+
+the first value in the matrix is theta 0 `(the intercept)
+the second value is theta 1 (the coefficient for GDP)
+the third value is theta 2 (the coefficient for Education)
+
+θ₀ = bias (intercept) — first element of the vector.
+
+θ₁…θₙ = weights for each feature — the rest of the elements.
 =====================================================================
