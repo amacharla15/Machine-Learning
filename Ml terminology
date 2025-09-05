@@ -1,0 +1,31 @@
+ML terminology:
+
+Features - X - GDP per capita
+Labels - y - Life satisfaction
+y hat - predicted values 
+Loss function → “How bad was my prediction for this one example?”
+Cost function → “On average, how bad am I doing across all examples?”
+=====================================================================
+
+Closed form without Gradient Descent:::
+
+life_satisfaction = θ0 + θ1 × GDP_per_capita
+
+Training → Find θ₀, θ₁ from data (by minimizing error)
+
+θ₀ (intercept) → baseline prediction when x = 0
+
+θ₁ (slope) → how much prediction changes per unit change in x
+
+Prediction → plug new x into equation
+
+Step 3: Formula to find θ₁ and θ₀ (closed form)
+
+For simple linear regression:
+θ1​=∑(xi​−xˉ)(yi​−yˉ​)​ /∑(xi​)^2
+
+θ0​=yˉ​−θ1​⋅xˉ  , 
+
+xˉ - mean of x values
+yˉ - mean of y values
+=====================================================================
