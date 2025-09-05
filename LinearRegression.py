@@ -213,3 +213,80 @@ Scikit-learn provides tools to handle missing values, including SimpleImputer an
     housing_num = imputer.fit_transform(housing_num)
 
 """
+#Feature Scaling — StandardScaler vs MinMaxScaler
+
+"""
+
+Definition:
+Feature scaling is the process of transforming input features so they are on comparable numerical ranges. This prevents features with larger values from dominating features with smaller values in machine learning algorithms.
+
+Why it matters:
+- Many ML algorithms (e.g., Linear Regression with gradient descent, SVM, KNN, PCA, Neural Networks) are sensitive to the scale of features.
+- Without scaling, large-range features can bias the model or slow convergence during training.
+- Scaling ensures that all features contribute equally to the learning process.
+
+When it matters most:
+- Algorithms based on distances (KNN, K-Means, SVM with RBF kernel).
+- Algorithms that use gradient descent optimization.
+- PCA (Principal Component Analysis), since it is variance-based.
+
+When it matters less:
+- Tree-based algorithms (Decision Trees, Random Forests, Gradient Boosted Trees) are not scale-sensitive.
+
+Common Scaling Methods:
+
+1. Standardization (Z-score scaling)
+   Formula:
+       x' = (x - μ) / σ
+       where μ = mean of the feature, σ = standard deviation
+   Result:
+       - Mean = 0
+       - Standard deviation = 1
+   Notes:
+       - Works well for normally distributed features.
+       - Values can be negative.
+
+2. Min-Max Scaling (Normalization)
+   Formula:
+       x' = (x - min) / (max - min)
+   Result:
+       - Scales values to a fixed range, usually [0, 1]
+   Notes:
+       - Preserves relative relationships.
+       - Sensitive to outliers.
+
+3. Robust Scaling
+   Formula:
+       x' = (x - median) / IQR
+       where IQR = Interquartile Range (Q3 - Q1)
+   Result:
+       - Less sensitive to outliers.
+   Notes:
+       - Useful when data has extreme values.
+
+Example:
+Suppose we have:
+Size (sqft): 1400, 2000, 3000
+Bedrooms: 3, 4, 5
+
+Min-Max Scaling to [0, 1]:
+Size_scaled:
+    1400 → (1400 - 1400) / (3000 - 1400) = 0.000
+    2000 → (2000 - 1400) / (3000 - 1400) = 0.375
+    3000 → (3000 - 1400) / (3000 - 1400) = 1.000
+Bedrooms_scaled:
+    3 → (3 - 3) / (5 - 3) = 0.00
+    4 → (4 - 3) / (5 - 3) = 0.50
+    5 → (5 - 3) / (5 - 3) = 1.00
+
+Standardization (Z-score):
+Size mean = 2133.33, std ≈ 802.77
+    1400 → (1400 - 2133.33) / 802.77 ≈ -0.915
+    2000 → (2000 - 2133.33) / 802.77 ≈ -0.166
+    3000 → (3000 - 2133.33) / 802.77 ≈  1.081
+Bedrooms mean = 4, std ≈ 0.816
+    3 → (3 - 4) / 0.816 ≈ -1.225
+    4 → (4 - 4) / 0.816 =  0.000
+    5 → (5 - 4) / 0.816 ≈  1.225
+
+"""
