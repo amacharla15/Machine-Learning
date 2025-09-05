@@ -1,1 +1,1 @@
-06/27/2025 took a dataset of userswith their age, salary , purchased or not a car and processed the data as of today, the data had missing values initially so used scikit learn classes to fill the missing data with the average of teh particular column. Learned what else methods to use to replace the mising data
+
