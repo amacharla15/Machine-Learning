@@ -172,3 +172,44 @@ We divide by the maximum possible CRC32 value: for example if hashing give 1= 22
 - Use case: Quick, one-time stratified split without multiple repetitions.
 
 """
+
+#Data Cleaning — Handling Missing Values - SimpleImputer vs IterativeImputer
+"""
+Definition:
+Data cleaning is the process of identifying and fixing or removing incorrect, corrupted, or missing parts of the dataset to ensure quality before model training.
+
+Missing values:
+Missing values can occur due to data entry errors, incomplete measurements, or merging datasets. They are often represented as NaN (Not a Number) in pandas.
+
+Scikit-learn provides tools to handle missing values, including SimpleImputer and IterativeImputer.
+
+1. SimpleImputer
+- Purpose: Fill missing values using a fixed strategy.
+- Strategies:
+    * "mean" — replace missing values with the column mean.
+    * "median" — replace with the column median.
+    * "most_frequent" — replace with the most common value in the column.
+    * "constant" — replace with a constant value specified by fill_value.
+- Example usage:
+    from sklearn.impute import SimpleImputer
+    imputer = SimpleImputer(strategy="median")
+    housing_num = imputer.fit_transform(housing_num)
+
+2. IterativeImputer
+- Purpose: Predict missing values using other features in the dataset.
+- Method:
+    1. Select a feature with missing values.
+    2. Use all other features as predictors in a regression model.
+    3. Predict and fill the missing values.
+    4. Repeat for other features with missing values.
+    5. Iterate the process multiple times to refine estimates.
+- Parameters:
+    * estimator — model used to predict missing values (default: BayesianRidge for continuous data).
+    * max_iter — number of imputation iterations.
+- Example usage:
+    from sklearn.experimental import enable_iterative_imputer
+    from sklearn.impute import IterativeImputer
+    imputer = IterativeImputer(max_iter=10, random_state=42)
+    housing_num = imputer.fit_transform(housing_num)
+
+"""
