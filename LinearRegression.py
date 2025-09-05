@@ -48,9 +48,9 @@ Why divide by m? To get the average squared error (MSE).
 Why take square root? To bring the units back to the same scale as y.
 """
 
-"""
-Machine Learning Performance Metrics — MAE vs RMSE
 
+#Machine Learning Performance Metrics — MAE vs RMSE
+"""
 1. Mean Absolute Error (MAE)
 - Definition: The average of the absolute differences between predictions and actual values.
 - Formula:
@@ -97,4 +97,46 @@ Machine Learning Performance Metrics — MAE vs RMSE
     * Outliers are rare, and you want to penalize them more.
 
 
+"""
+
+#Stable Train/Test Split Using Hashing
+"""
+Purpose:
+When datasets are updated over time (new rows added, some removed), a normal random split can shuffle data differently each time.
+This can cause:
+1. Data leakage — rows that were in the test set before might end up in the training set later.
+2. Inconsistent evaluation — your test set changes, so results can’t be compared fairly across runs.
+
+Solution:
+Use a stable, deterministic method to decide whether each row goes into the training set or test set.
+One common method is hashing.
+
+Process:
+1. Each row in the dataset has a unique and unchanging identifier (e.g., ID number, customer ID, product code).
+2. Apply a hash function to this ID.
+   - A hash function turns the ID into a large integer.
+   - The same ID will always produce the same hash value.
+   - Different IDs will produce different values, evenly spread over a range.
+3. Normalize the hash value:
+   - Divide the hash result by the maximum possible hash value.
+   - This converts it to a range between 0 and 1 (normalized value).
+4. Compare to a threshold:
+   - Decide the percentage of data for the test set (e.g., 20% → threshold = 0.2).
+   - If the normalized value ≤ threshold → assign to the test set.
+   - If it is greater → assign to the training set.
+
+Why it is stable:
+- The hash for the same ID never changes.
+- The train/test assignment depends only on the ID, not on random sampling.
+- If new data is added, old rows keep their assignment.
+- About 20% of any new rows will go to the test set, the rest to the training set.
+
+Example:
+- ID 1 → hash result = 2212294583 → normalized = 0.5149 → Train (since > 0.2)
+- ID 4 → hash result = 682475091  → normalized = 0.1588 → Test (since ≤ 0.2)
+Even if you add IDs 11–20 later, IDs 1 and 4 will remain in their original sets.
+
+#Normalizing the hash value:
+
+We divide by the maximum possible CRC32 value: for example if hashing give 1= 2212294583, we divide by 2^32 = 4294967296 to get 0.5149.
 """
