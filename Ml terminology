@@ -6,7 +6,7 @@ y hat - predicted values
 Loss function → “How bad was my prediction for this one example?”
 Cost function → “On average, how bad am I doing across all examples?”
 =====================================================================
-Step 1: Simple Linear Regression - Works only when you have 1 feature (x).
+Step 1: Simple Linear Regression - Works only when you have 1 feature (x) - one column.
 
 life_satisfaction = θ0 + θ1 × GDP_per_capita
 

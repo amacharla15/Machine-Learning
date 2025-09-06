@@ -290,3 +290,90 @@ Bedrooms mean = 4, std ≈ 0.816
     5 → (5 - 4) / 0.816 ≈  1.225
 
 """
+"""Gradient Descent — Intuition to Practice
+
+1) Problem Setup (Linear Regression)
+We want to learn parameters θ = [θ0, θ1, …, θn]^T so predictions match targets y.
+Prediction (vector form): ŷ = θ^T x  (for 1D: ŷ = θ0 + θ1 x)
+
+Loss we minimize (training objective): Mean Squared Error (MSE)
+    J(θ) = (1/m) * Σ_i (ŷ(i) − y(i))^2
+Where:
+  m = number of training examples
+  x^(i) = features of example i (x0 = 1 for bias)
+  ŷ(i) = θ^T x^(i)
+
+2) Why “Gradient” Descent?
+- The gradient ∇_θ J(θ) points in the direction of steepest INCREASE of the loss.
+- To DECREASE the loss, we move in the opposite direction:
+      θ ← θ − η * ∇_θ J(θ)
+  η (“eta”) is the learning rate: a hyperparameter we choose to control step size.
+
+3) Gradients for Linear Regression with MSE
+For each parameter θ_j:
+    ∂J/∂θ_j = (2/m) * Σ_i ( (θ^T x^(i) − y^(i)) * x_j^(i) )
+Vectorized (X_b = design matrix with bias col, shape m×(n+1)):
+    ∇_θ J(θ) = (2/m) * X_b^T (X_b θ − y)
+
+4) Learning Rate (η)
+- Not computed from data; YOU set it (hyperparameter).
+- Too small → slow convergence; too large → divergence/oscillation.
+- Typical starting points: 0.1, 0.01, 0.001
+- Often use a schedule to reduce η over time (see “Schedules” below).
+
+5) Three Flavors of Gradient Descent
+A) Batch Gradient Descent (BGD)
+   - Uses ALL m examples to compute each gradient step.
+   - Update:
+       θ ← θ − η * (2/m) * X_b^T (X_b θ − y)
+   - Stable direction, but each step is expensive for large m.
+
+B) Stochastic Gradient Descent (SGD)
+   - Uses ONE example per step.
+   - For a single (x^(i), y^(i)):
+       θ ← θ − η * 2 * ( (θ^T x^(i) − y^(i)) * x^(i) )
+     (No division by m in pure SGD.)
+   - Very fast updates, noisy trajectory; good for huge datasets/out-of-core.
+
+C) Mini-batch Gradient Descent (MBGD)
+   - Uses a small batch of b examples per step (2 ≤ b ≪ m).
+   - Compromise: faster than batch, smoother than SGD.
+   - Works well with modern hardware (vectorized math on batches).
+
+6) Tiny Worked Example (Makes the math concrete)
+Dataset (perfect line y = 2x):
+   (x, y): (1,2), (2,4), (3,6)
+Add bias: x0=1 → x^(i) = [1, x]^T. Start θ0=0, θ1=0. Let η=0.1.
+
+First Batch-GD step:
+  Predictions at start: ŷ = 0
+  Errors: e = ŷ − y = [-2, -4, -6]
+  Gradient components:
+    ∂J/∂θ0 = (2/3) * (-2 + -4 + -6) = (2/3) * (-12) = -8
+    ∂J/∂θ1 = (2/3) * [(-2)*1 + (-4)*2 + (-6)*3] = (2/3)*(-28) = -18.666...
+  Update:
+    θ0 ← 0 − 0.1 * (-8)      = 0.8
+    θ1 ← 0 − 0.1 * (-18.667) = 1.8667
+  Interpretation:
+    One step already moved slope near the true 2. Repeating converges quickly.
+
+First SGD pass (in order 1→2→3), same η=0.1:
+  Start θ=[0,0]^T
+  i=1: x=[1,1], y=2 → error = (0)−2 = -2
+       grads: dθ0=2*(-2)*1=-4, dθ1=2*(-2)*1=-4
+       θ ← θ − 0.1*[ -4, -4 ]^T = [0.4, 0.4]
+  i=2: x=[1,2], y=4 → ŷ=0.4+0.4*2=1.2, error=-2.8
+       dθ0=-5.6, dθ1=-11.2
+       θ ← [0.4,0.4] − 0.1*[-5.6,-11.2] = [0.96, 1.52]
+  i=3: x=[1,3], y=6 → ŷ=0.96+1.52*3=5.52, error=-0.48
+       dθ0=-0.96, dθ1=-1.44
+       θ ← [0.96,1.52] − 0.1*[-0.96,-1.44] = [1.056, 1.664]
+  Interpretation:
+    Faster early movement but noisy; over many passes (epochs), it hovers near optimum.
+
+Mini-batch example (batch size b=2):
+  Batch 1: points 1 & 2 → compute gradient over those 2, update.
+  Batch 2: point 3 (and optionally wrap with point 1) → gradient, update.
+  Interpretation:
+    Steps are less noisy than SGD, cheaper than full batch; common default in practice.
+    """
