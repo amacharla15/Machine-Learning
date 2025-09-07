@@ -1,0 +1,22 @@
+2) The goal for this exercise is to understand gradient descent and the fit/cost
+function method to define a function to find a global best fit or minimum cost. Please read
+and complete the following Jupyter notebook (04_training_linear_models.ipynb) and refer to
+Chapter 4 reading for more background. Once you have completed the reading and notebook
+examples, please provide a screenshot of 3 models side-by-side for the generated data
+including the best linear regression and a polynomial fit for degree=2 and degree=3. Reading
+the Wikipedia page on Polynomial regression may help you to better understand the methods
+used for polynomial models (https://en.wikipedia.org/wiki/Polynomial_regression). After
+you have shown your 3 comparative models as plots and commented on which is best and
+why, then answer the following questions:
+
+a) Based on your side-by-side comparison, which modeling method (linear, or polynomial
+degree=2 or 3) is best and why?
+
+b)
+ What is the best overall gradient descent method and why?
+
+ c) For your three models (linear, degree=2, and degree=3), what is the MSE (Mean Square
+Error) and RMSE (Root MSE) for each?
+
+d) What are the key hyper-parameters you used for your linear, degree=2, and degree=3
+models?
