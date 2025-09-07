@@ -1,0 +1,23 @@
+1)The goal for this exercise is to experiment with a Python Scikit learn linear
+regression model as an abstraction that is used to model data collected based on
+measurements (financial or surveys for example) and then predict the value of missing data
+using the model created. Please read and complete the following Jupyter notebook
+(01_the_machine_learning_landscape.ipynb) and refer to Chapter 1, 2, and 4 reading for
+more background. Once you have completed the reading and notebook, provide a screenshot
+of what you believe is the best linear regression for the GDP example for the corresponding
+ϴ0 and ϴ1, and then please answer the following questions:
+
+a) Show your best regression results and describe the parameters (ϴ0 and ϴ1) used in the
+GDP linear regression model (e.g., how do they compare to the equation of a line)?
+
+b) What is the cost function that is used by SciKit to determine if the model is improving as
+the two parameters are updated during training? (If you cannot figure this out from the
+code, then based on looking ahead at the chapter 4 reading, what would be ideal?)
+
+c) What is the difference in use of data for training, validation, and testing while developing
+ML models?
+
+d) Describe Python code used that you did not fully understand (e.g., model.fit(X, y)) and
+attempt to explain it better by looking up the function in SciKit learn documentation
+(https://scikit-learn.org/stable/) and describe it to the point where you believe you could
+implement the function instead of just calling it.
